@@ -1,14 +1,14 @@
-<div class="movie-card">
+<div data-controller="edit-movie" class="movie-card">
   <%= image_tag movie.image_url %>
 
   <div class="movie-infos">
     <h2><%= movie.title %><small> (<%= movie.year %>)</small></h2>
-    <button aria-label="Edit movie">
+    <button data-action="click->edit-movie#showForm" aria-label="Edit movie">
       <i class="fa-solid fa-pen fa-xs ml-2"></i>
     </button>
   </div>
 
-  <%= simple_form_for movie, html: {class: "d-none"} do |f| %>
+  <%= simple_form_for movie, data: {edit_movie_target: "form", action: "submit->edit-movie#update"}, html: {class: "d-none"} do |f| %>
     <%= f.input :title %>
     <%= f.input :year %>
     <%= f.submit "Update movie", class: "btn btn-sm btn-primary btn-block mt-2" %>

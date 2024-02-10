@@ -2,17 +2,26 @@
   <div class="row">
     <div class="col">
       <h1 class="h2 my-3 d-flex justify-content-center">Movies to watch 🍿</h1>
-
-      <div>
-        <%= form_with url: movies_path, method: :get, html: {class: "mb-4"} do |f| %>
+      
+      <div data-controller="greeting" class="text-center my-5">
+        <button data-action="click->greeting#showMessage" class="btn btn-primary mb-3">Show greeting message</button>
+        <p data-greeting-target="message" class="d-none">Hello #1383! Time for some backend/frontend magic ✨</p>
+      </div>
+      
+      <div data-controller="search-movies">
+        <%= form_with data: { search_movies_target: "form" }, url: movies_path, method: :get, html: {class: "mb-4"} do |f| %>
           <%= f.label :query, "Type a movie title" %>
           <%= f.text_field :query,
                            class: "form-control",
-                           value: params[:query]
+                           value: params[:query],
+                           data: { action: "keyup->search-movies#update", search_movies_target: "input"}
                            %>
         <% end %>
-
-        <%= render "list", movies: @movies %>
+        <%# data-search-movies-target="form" %>
+        <%# data-action = "keyup->search-movies#update" %>
+        <div data-search-movies-target="list">
+          <%= render "list", movies: @movies %>
+        </div>
       </div>
     </div>
   </div>
